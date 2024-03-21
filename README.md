@@ -1,10 +1,86 @@
 pile-up
-String simples: Eu utilizei uma string sem caracteres especiais, como "hello". Este teste verificou se a função inverter_string() pôde lidar corretamente com uma entrada básica e produzir a saída esperada.
+class No:
+    """
+    Classe No: Representa um nó em uma estrutura de dados do tipo Pilha.
+    Cada nó tem um valor associado e um ponteiro para o próximo nó na pilha.
+    """
+    def __init__(self, valor):
+        """
+        Inicializa o nó com um valor fornecido e o próximo nó como None.
+        :param valor: O valor a ser armazenado no nó.
+        """
+        self.valor = valor
+        self.proximo = None
 
-String com caracteres especiais: Eu utilizei uma string contendo caracteres especiais, como "hello, world!". Este teste verificou se a função lidou corretamente com caracteres especiais e manteve sua posição durante a inversão.
+class Pilha:
+    """
+    Classe Pilha: Implementa uma estrutura de dados do tipo pilha utilizando uma
+    abordagem de lista encadeada. Suporta operações básicas de pilha como push (empilhar),
+    pop (desempilhar), peek (observar o topo) e is_empty (verificar se está vazia).
+    """
+    def __init__(self):
+        """
+        Inicializa a pilha sem nenhum elemento.
+        """
+        self.topo = None
 
-String numérica: Eu utilizei uma string contendo apenas números, como "12345". Este teste garantiu que a função fosse capaz de inverter corretamente strings numéricas sem alterar a ordem dos números.
+    def push(self, valor):
+        """
+        Adiciona um elemento no topo da pilha.
+        :param valor: O valor a ser empilhado.
+        """
+        novo_no = No(valor)
+        novo_no.proximo = self.topo
+        self.topo = novo_no
 
-String vazia: Eu utilizei uma string vazia. Este teste verificou se a função tratou corretamente o caso de uma entrada vazia, retornando uma string vazia como resultado.
+    def pop(self):
+        """
+        Remove e retorna o elemento do topo da pilha.
+        :return: O valor do elemento removido do topo da pilha.
+        :raises Exception: Se a pilha estiver vazia.
+        """
+        if self.topo is not None:
+            removido = self.topo
+            self.topo = self.topo.proximo
+            return removido.valor
+        else:
+            raise Exception("Pilha vazia.")
 
-String com espaços: Eu utilizei uma string contendo espaços, como "hello world". Este teste verificou se a função lidou corretamente com espaços em branco e manteve sua posição durante a inversão.
+    def peek(self):
+        """
+        Retorna o valor do elemento no topo da pilha sem remover.
+        :return: O valor do elemento no topo da pilha.
+        :raises Exception: Se a pilha estiver vazia.
+        """
+        if self.topo is not None:
+            return self.topo.valor
+        else:
+            raise Exception("Pilha vazia.")
+
+    def is_empty(self):
+        """
+        Verifica se a pilha está vazia.
+        :return: True se a pilha estiver vazia, False caso contrário.
+        """
+        return self.topo is None
+
+def inverter_string(string):
+    """
+    Inverte uma string utilizando a estrutura de pilha.
+    :param string: A string a ser invertida.
+    :return: A string invertida.
+    """
+    pilha = Pilha()
+    for caractere in string:
+        pilha.push(caractere)
+    
+    string_invertida = ""
+    while not pilha.is_empty():
+        string_invertida += pilha.pop()
+    
+    return string_invertida
+
+# Teste
+string = "Brendha Rodrigues!"
+print("String original:", string)
+print("String invertida:", inverter_string(string))
